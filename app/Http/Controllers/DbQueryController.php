@@ -21,7 +21,7 @@ class DbQueryController extends Controller
     }
     public function deleteData($id){
         $delete=DB::delete("DELETE FROM students WHERE id=?",[$id]);
-        $name='Nirobfggf';
+        $name='Nirobf';
         return $delete;
     }
 }
