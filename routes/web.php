@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\DbQueryController;
+use App\Http\Controllers\ModelConventionController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,3 +27,6 @@ Route::get('db',[DbQueryController::class,'insertData']);
 Route::get('db/showdata',[DbQueryController::class,'showData']);
 Route::get('db/updatedata/{id}',[DbQueryController::class,'updateData']);
 Route::get('db/deletedata/{id}',[DbQueryController::class,'deleteData']);
+
+Route::resource('users',UserController::class);
+Route::resource('model',ModelConventionController::class);

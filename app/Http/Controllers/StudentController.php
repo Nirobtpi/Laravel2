@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StudentRequest;
 use App\Models\Book;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -14,7 +15,15 @@ class StudentController extends Controller
     function index(){
     //    return $books=Book::with('user')->where('author_id','=',10)->get();
     // DB::table('students')->get();
-    $users= DB::table('users')->where('age','<=',40)->get();
+    // $users= DB::table('users')->where('age','<=',40)->get();
+    // $users=collect();
+    // Student::chunk(3,function($new)  use (&$users){
+    //     foreach($new as $user){
+    //         $users->push($user);
+    //     }
+    // });
+    // return $alusers;
+    $users=Student::paginate(5);
 
     return view('users',compact('users'));
        
@@ -92,7 +101,7 @@ class StudentController extends Controller
     }
 
 
-    public function studentUpdate(Request $request, $id){
+    public function studentUpdate(StudentRequest $request, $id){
        $request->validate([
         'name'=>['required'],
         'email'=>['required','unique:students,email,'.$id]

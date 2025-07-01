@@ -12,7 +12,12 @@ class DbQueryController extends Controller
         return $data;
     }
     public function showData(){
-        $data=DB::select("SELECT * FROM students WHERE age < 40 and name LIKE '%N%'");
+        // $data=DB::select("SELECT * FROM students WHERE age < 40 and name LIKE '%N%'");
+        $data=DB::table('students')
+                // ->select('name','email')
+                ->selectRaw('name,email,Group_Concat(students.age SEPARATOR ",") as student_count')
+                ->groupByRaw('age,name,email')
+                ->get();
         return $data;
     }
     public function updateData($id){
@@ -21,7 +26,7 @@ class DbQueryController extends Controller
     }
     public function deleteData($id){
         $delete=DB::delete("DELETE FROM students WHERE id=?",[$id]);
-        $name='Nirobf';
+       
         return $delete;
     }
 }
