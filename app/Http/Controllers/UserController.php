@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -12,13 +14,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user=User::chunk(3,function($users){
-           foreach($users as $user){
-               echo $user->name .'<br/>';
-           }
-           echo "<br><br><br>";
-        });
+        // $user=User::chunk(3,function($users){
+        //    foreach($users as $user){
+        //        echo $user->name .'<br/>';
+        //    }
+        //    echo "<br><br><br>";
+        // });
         // return "This is the user index";
+
+        $users=User::with('roles')->get();
+        return $users;
+       
        
     }
 
@@ -27,7 +33,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return "This is the user create";
+       
+        $roles=Role::get();
+        return view('user-role',compact('roles'));
     }
 
     /**
@@ -35,7 +43,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    //    return $request->all();
+        $request->validate([
+            'name'=>['required'],
+            'email'=>['required','unique:users,email'],
+            'password'=>['required'],
+            'roles'=>['required','array'],
+        ]);
+
+       $user= User::create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'password'=>Hash::make($request->password),
+        ]);
+        $user->roles()->attach($request->roles);
+        return redirect()->back()->with('success', 'User created with roles!');
     }
 
     /**
