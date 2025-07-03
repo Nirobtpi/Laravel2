@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -65,7 +66,26 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        return "This is the user $id";
+        $user=User::with('roles')->find(12);
+        // $role=collect(['admin','editor']);
+        $role=Role::pluck('name');
+        $roles=collect($role);
+
+ 
+
+    if($user->hasRole2('editor','admin','user') && $user->roles()->count()===3){
+        return 'You are all in one';
+    }
+    if($user->hasRole2('editor')){
+        return 'You are Editor';
+    }
+
+
+        
+        // $userRoles=$user?->roles?->pluck('name');
+        // if($roles->diff($userRoles)->isEmpty()){
+        //     return "This is admin, user or editor";
+        // }
     }
 
     /**
