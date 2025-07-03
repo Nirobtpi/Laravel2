@@ -66,18 +66,18 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user=User::with('roles')->find(12);
+        $user=User::with('roles')->find($id);
         // $role=collect(['admin','editor']);
         $role=Role::pluck('name');
-        $roles=collect($role);
+        $roleCount=$role->count();
+        // return $roleCount;
+        // $roles=collect($role);
 
- 
-
-    if($user->hasRole2('editor','admin','user') && $user->roles()->count()===3){
+    if($user->hasRole2($role) && $user->roles()->count()===$roleCount){
         return 'You are all in one';
     }
-    if($user->hasRole2('editor')){
-        return 'You are Editor';
+    if($user->hasRole2($role)){
+        return 'You are Not Super Admin';
     }
 
 

@@ -16,12 +16,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_user');
     }
 
-    public function hasRole($role){
-        return $this->roles?->pluck('name')?->contains($role);
-    }
-    public function hasRole2(...$roles)
+ 
+    public function hasRole2($roles)
     {
-        return $this->roles? $this->roles->pluck('name')->intersect($roles)->isNotEmpty(): false;
+        return $this->roles? $this->roles?->pluck('name')?->intersect($roles)?->isNotEmpty(): false;
     }
 
     /**
