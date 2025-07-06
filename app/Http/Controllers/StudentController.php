@@ -151,6 +151,7 @@ class StudentController extends Controller
             return $i;
         });
         $number=collect([1,2,3,4,5,6,7,8,9,10]);
+        $number2=collect([1,5,9,7,8,6,4,3,2,10]);
         $filter=$number->filter(function($i){
             return $i%2==0;
         });
@@ -163,9 +164,16 @@ class StudentController extends Controller
         $slice=$number->slice(3);
         $sliding=$number->sliding(2);
         $contains=$number->isEmpty();
+        $sort=$number2->sort();
+        // return $sort->values();
+        $splice=$number->splice(5);
+
+        $number3=collect([1,2,3,4,5,6,7,8,9,10]);
+        $splice2=$number3->splice(offset: 2,length: 2,replacement: [11,12]);
+        
 
         // return $number->average();
-        return $sliding;
+        return $splice2;
     }
     
  
