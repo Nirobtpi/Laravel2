@@ -17,7 +17,7 @@ route::get('view/{id}',[StudentController::class,'view'])->name('view');
 Route::get('update/{id}',[StudentController::class,'update'])->name('update');
 Route::put('user/{id}',[StudentController::class,'updateUser'])->name('updateUser');
 Route::get('students',[StudentController::class,'stData'])->name('students');
-Route::get('student/update/{id}',[StudentController::class,'updateStudent'])->name('updateStudent');
+Route::get('student/edit/{id}',[StudentController::class,'updateStudent'])->name('updateStudent');
 Route::put('student/update/{id}',[StudentController::class,'studentUpdate'])->name('studentUpdate');
 
 
@@ -32,3 +32,7 @@ Route::get('db/deletedata/{id}',[DbQueryController::class,'deleteData']);
 Route::resource('user',UserController::class);
 Route::resource('model',ModelConventionController::class);
 Route::resource('role',RoleController::class);
+
+Route::get('test',[StudentController::class,'test']);
+// route ajax 
+Route::get('student/search',[StudentController::class,'studentSearch'])->name('student.search');

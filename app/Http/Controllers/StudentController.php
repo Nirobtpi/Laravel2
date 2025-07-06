@@ -101,11 +101,12 @@ class StudentController extends Controller
     }
 
 
-    public function studentUpdate(StudentRequest $request, $id){
+    public function studentUpdate(Request $request, $id){
        $request->validate([
         'name'=>['required'],
         'email'=>['required','unique:students,email,'.$id]
        ]);
+    //    return $request->all();
 
        $data=[
         'name'=>$request->name,
@@ -126,6 +127,45 @@ class StudentController extends Controller
         Student::findOrFail($id)->update($data);
         return redirect()->route('students')->with('success', ucfirst($request->name) . ' Your Data Updated Successfully');
 
+    }
+
+    public function studentSearch(Request $request){
+        $query=$request->get('search');
+        // $students=Student::where(function($q) use ($query){
+        //    $q->where('name','like','%'.$query.'%')
+        //    ->orWhere('email','like','%'.$query.'%');
+        // })->get();
+        
+    $students = Student::where(function($q) use ($query) {
+        $q->where('name', 'like', '%' . $query . '%')
+          ->orWhere('email', 'like', '%' . $query . '%');
+        })->with('books')->get();
+
+        // return $students;
+
+        return response()->json($students);
+    }
+
+    public function test(){
+        $collect=collect([1,2,3,4])->map(function($i){
+            return $i;
+        });
+        $number=collect([1,2,3,4,5,6,7,8,9,10]);
+        $filter=$number->filter(function($i){
+            return $i%2==0;
+        });
+        $skipWhile=$number->skipWhile(function($i){
+            return $i <=3;
+        });
+        // $each=$number->each(function($i){
+        //     echo $i*2 ."<br>";
+        // });
+        $slice=$number->slice(3);
+        $sliding=$number->sliding(2);
+        $contains=$number->isEmpty();
+
+        // return $number->average();
+        return $sliding;
     }
     
  

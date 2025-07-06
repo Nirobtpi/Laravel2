@@ -36,18 +36,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $as=>$user)
-                                    <tr>
-                                        <th scope="row">{{ $loop->index + 1 }}</th>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>
-                                            <a href="{{ route('view',$user->id) }}" class="btn btn-sm btn-success">View</a>
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('update',$user->id) }}" class="btn btn-sm btn-info">Update</a>
-                                        </td>
-                                    </tr>
+                                    @foreach ($users as $index=>$user)
+                                        <tr>
+                                            <th scope="row">{{ $users->firstItem() + $index }}</th>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>
+                                                <a href="{{ route('view',$user->id) }}" class="btn btn-sm btn-success">View</a>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('update',$user->id) }}" class="btn btn-sm btn-info">Update</a>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>

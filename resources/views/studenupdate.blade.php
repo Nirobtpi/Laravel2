@@ -32,7 +32,7 @@
                                     <h4>Update Student Data</h4>
                                 </div>
                                 <div class="from-box">
-                                    <form action="{{ route('updateStudent', $student->id) }}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{ route('studentUpdate', $student->id) }}" method="POST" enctype="multipart/form-data">
                                         @method('PUT')
                                         @csrf
                                         <div class="mb-3">
